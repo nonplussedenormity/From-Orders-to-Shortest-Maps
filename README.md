@@ -19,7 +19,7 @@ Steps to run the code:
 4. There will be a window asking for details reagarding the order.
 5. The following cells should have specified data entered in the cell. 
 6. 'Coordinate' cell as a tuple with two integer values (less than 1500). And 'address' cell should have location from the list of edges only. 
-7. Fill all the cells and click submit.
+7. Fill all the cells and click submit. And remember to take enter locations with their cordiantes as wriiten in the commented data.
 8. The shortest path will be automatically opened in a new window while the input window will be closed. 
 9. And there you go, most optimum path to rach every customer on first come first basis.
 
