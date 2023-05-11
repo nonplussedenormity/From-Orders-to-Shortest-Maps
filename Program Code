@@ -1,1 +1,399 @@
-The code is here
+#The code is here!
+
+import tkinter as tk
+from tkinter import filedialog
+import os
+# 'ali': {'orderdetail': {'item': 'keyboard','quantity': 1,'price': 1000 },
+#     'contactdetail': {'user name': 'ali','cordinate': (1000,200),'OrderPlaced': '22-10-23'}}
+class InputWindow(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.master.title("Input Form")
+        self.pack()
+        #rider ka data if possible
+        # Create label and input fields for each data field
+        self.name_label = tk.Label(self, text="Name:")
+        self.name_label.pack()
+        self.name_input = tk.Entry(self)
+        self.name_input.pack()
+
+        self.orderdetail_label = tk.Label(self, text="Order detail: \n")
+        self.orderdetail_label.pack()
+        
+        self.item_label = tk.Label(self, text="item:")
+        self.item_label.pack()
+        self.item_input = tk.Entry(self)
+        self.item_input.pack()
+
+        self.quantity_label = tk.Label(self, text="quantity:")
+        self.quantity_label.pack()
+        self.quantity_input = tk.Entry(self)
+        self.quantity_input.pack()
+
+        self.price_label = tk.Label(self, text="price:")
+        self.price_label.pack()
+        self.price_input = tk.Entry(self)
+        self.price_input.pack()
+
+        self.contactdetail_label = tk.Label(self, text="Contact detail: \n")
+        self.contactdetail_label.pack()
+
+        self.username_label = tk.Label(self, text="Username:")
+        self.username_label.pack()
+        self.username_input = tk.Entry(self)
+        self.username_input.pack()
+
+        self.coordinate_label = tk.Label(self, text="coordinate:")
+        self.coordinate_label.pack()
+        self.coordinate_input = tk.Entry(self)
+        self.coordinate_input.pack()
+
+        self.address_label = tk.Label(self, text="Address:")
+        self.address_label.pack()
+        self.address_input = tk.Entry(self)
+        self.address_input.pack()
+
+
+        self.OrderPlaced_label = tk.Label(self, text="OrderPlaced:")
+        self.OrderPlaced_label.pack()
+        self.OrderPlaced_input = tk.Entry(self)
+        self.OrderPlaced_input.pack()
+
+        
+
+        # Create a submit button
+        self.submit_button = tk.Button(self, text="Submit", command=self.submit)
+        self.submit_button.pack()
+
+        # Keep track of how many times the user has submitted data
+        self.count = 0
+
+        # Create lists to store the input data
+        self.names = []
+        self.item = []
+        self.quantity = []
+        self.price = []
+        self.username = []
+        self.coordinate= []
+        self.address = []
+        self.OrderPlaced = []
+
+        
+
+    def submit(self):
+        # Get the input data
+        name = self.name_input.get()
+        item = self.item_input.get()
+        quantity = self.quantity_input.get()
+        price = self.price_input.get()
+        username = self.username_input.get()
+        coordinate = self.coordinate_input.get()
+        address = self.address_input.get()
+        OrderPlaced = self.OrderPlaced_input.get()
+
+        # Clear the input fields
+        self.name_input.delete(0, tk.END)
+        self.item_input.delete(0, tk.END)
+        self.quantity_input.delete(0, tk.END)
+        self.price_input.delete(0, tk.END)
+        self.username_input.delete(0,tk.END)
+        self.coordinate_input.delete(0, tk.END)
+        self.address_input.delete(0, tk.END)
+        self.OrderPlaced_input.delete(0,tk.END)
+        # Add the input data to the lists
+        self.names.append(name)
+        self.item.append(item)
+        self.quantity.append(quantity)
+        self.price.append(price)
+        self.username.append(username)
+        self.coordinate.append(coordinate)
+        self.address.append(address)
+        self.OrderPlaced.append(OrderPlaced)
+
+        # Increment the submission count
+        self.count += 1
+
+        # If the user has submitted data 10 times, save the data to a text file and close the window
+        if self.count == 2:
+            # Delete file if it already exists
+            if os.path.exists('user_info.txt'):
+                os.remove('user_info.txt')
+            # Save the input data to a text file
+            filename = "input_data2_0.txt"
+            with open(filename, "w") as f:
+                f.write(f"Name:{self.names}\n")
+                f.write(f"item:{self.item}\n")
+                f.write(f"quantity:{self.quantity}\n")
+                f.write(f"price:{self.price}\n")
+                f.write(f"username:{self.username}\n")
+                f.write(f"coordinate:{self.coordinate}\n")
+                f.write(f"address:{self.address}\n")
+                f.write(f"OrderPlaced:{self.OrderPlaced}\n")
+                f.write("\n")
+
+            self.master.destroy()
+
+# Create the main window
+root = tk.Tk()
+#creat the input window 
+input_window = InputWindow(master=root)
+#runt he main event loop
+input_window.mainloop()
+raw_data = []
+# raw_data=[['Name', "['omer', 'ail']\n"], ['item', "['ball', 'bat']\n"], ['quantity', "['1', '1']\n"], ['price', "['200', '250']\n"], ['username', "['omer', 'ali']\n"], ['coordinate', "['lahore', 'karachi']\n"], ['OrderPlaced', "['15-7-21', '12-12-21']\n"]]
+with open("input_data2_0.txt", "r") as f:
+    for line in f:
+        if line != " " and line != '\n':
+            raw_data.append(line.split(':'))
+# print(raw_data)
+def clearingout(lst):
+    forall = []
+    user_data = {}
+    for x in lst:
+        st = ''
+        for s in x[1]:
+            if s != '\n':
+                st += s
+        x[1] = eval(st)
+    p = []
+    for j in lst:
+        p.append(j[0])
+    names = lst[0][1]
+    for name in names:
+        forone = []
+        for x in range(len(lst)):
+            e = lst[x][1][names.index(name)]
+            forone.append(e)
+        forall.append(forone)
+    # print(forall)
+#  'ali': {'orderdetail': {'item': 'keyboard','quantity': 1,'price': 1000 }, 'contactdetail': {'user name': 'ali','cordinate': (1000,200),'address': 'gulshan','date to be delivered': '22-10-23'}
+
+    for name in names:
+        orderdetail= {}
+        contactdetail = {}
+        address = {}
+        user_data[name] = {'orderdetail' : {},'contactdetail' : {}}
+        for x in range(len(p)):
+            key = p[x]
+            data = forall[names.index(name)]
+            if key != '' and data != '':
+                if key == 'item'or key == 'quantity' or key == 'price':
+                    user_data[name]['orderdetail'][key]= data[p.index(key)]
+                elif key == 'username' or key == 'address' or key == 'OrderPlaced':
+                    user_data[name]['contactdetail'][key] = data[p.index(key)]
+                elif key == 'coordinate':
+                    user_data[name]['contactdetail'][key] = tuple(int(x) for x in data[p.index(key)].split(','))
+                    # tuple(int(x) for x in data[p.index(key)].split(','))
+    return user_data
+user_data = (clearingout(raw_data))
+
+# user_data={'ali': {'orderdetail': {'item': 'keyboard','quantity': 1,'price': 1000 }, 'contactdetail': {'user name': 'ali','cordinate': (1000,200),'address': 'gulshan','date to be delivered': '22-10-23'}},
+#          'omer': {'orderdetail': {'item': 'football','quantity': 1,'price': 800}, 'contactdetail': {'user name': 'omer', 'cordinate':(350,170),'address': 'jauhar','date to be delivered': '17-9-23'}},
+#          'akber': {'orderdetail': {'item': '2nd Edition Histroy book','quantity': 1,'price': 1200}, 'contactdetail': {'user name': 'akber', 'cordinate':(800,300),'address': 'garden','date to be delivered': '11-5-23'}},
+#          'ahsan': {'orderdetail': {'item': 'S22 phone','quantity': 1,'price': 850}, 'contactdetail': {'user name': 'ahsan', 'cordinate':(360,690),'address': 'buffer zone','date to be delivered': '11-11-23'}},
+#          'arif': {'orderdetail': {'item': 'Gamingkeyboard','quantity': 1,'price': 1150}, 'contactdetail': {'user name': 'arif', 'cordinate': (1000,400),'address': 'new karachi','date to be delivered': '21-4-23' }}, 
+#          'muhib': {'orderdetail': {'item': 'football','quantity': 5,'price': 5000}, 'contactdetail': {'user name': 'muhib', 'cordinate':(540,680),'address': 'cantt','date to be delivered': '14-6-23'}}, 
+#          'bilal': {'orderdetail': {'item': 'story book','quantity': 1,'price': 200}, 'contactdetail': {'user name': 'bilal', 'cordinate':(1100,900),'address': 'DHA','date to be delivered': '12-7-23'}},
+#          'amir': {'orderdetail': {'item': 'Nokia phone','quantity': 1,'price': 450}, 'contactdetail': {'user name': 'amir', 'cordinate':(310,400),'address': 'nazimabad','date to be delivered': '23-4-23'}},
+#          'umer': {'orderdetail': {'item': 'light bulb','quantity': 1,'price': 120}, 'contactdetail': {'user name': 'umer', 'cordinate':(340,870),'address': 'liyari','date to be delivered': '15-5-23'}},
+#          'uzair': {'orderdetail': {'item': 'table','quantity': 1,'price': 320}, 'contactdetail': {'user name': 'uzair', 'cordinate':(470,820),'address': 'sharahefaisal','date to be delivered': '17-6-23'}},
+#          'anees': {'orderdetail': {'item': 'sofa','quantity': 1,'price': 20000}, 'contactdetail': {'user name': 'anees', 'cordinate':(380,840),'address': 'golimar','date to be delivered': '1-6-23'}},
+#          'salman': {'orderdetail': {'item': 'fan','quantity': 1,'price': 4500}, 'contactdetail': {'user name': 'uzair', 'cordinate':(470,820),'address': 'GHQ','date to be delivered': '9-6-23'}}}
+
+
+import math
+import heapq
+from tkinter import *
+
+canvas_width = 2000
+canvas_height = 1500
+python_green = "#476042"
+edgedist = []
+
+def draw_node(canvas, x, y, text):
+    canvas.create_oval(x-60, y-60, x+60, y+60, fill=python_green, outline=python_green)
+    canvas.create_text(x, y, text=text, fill="black", font="Arial 12 bold")
+
+def draw_edge(canvas, x1, y1, x2, y2):
+    canvas.create_line(x1, y1, x2, y2, fill="black", width=2)
+
+def calculate_distance(x1, y1, x2, y2):
+    return math.sqrt((x2-x1)**2 + (y2-y1)**2)
+
+master = Tk()
+
+w = Canvas(master, width=canvas_width, height=canvas_height)
+w.pack()
+
+
+square = w.create_rectangle(1200,500, 1800, 900, fill="blue")
+square = w.create_rectangle(1200,100, 1800, 400, fill="red")
+
+
+
+nodes=[]
+riderdata = {'name': 'hamad', 'coordinate': (100, 100)}
+edges_users = [['golimar','GHQ'], ['GHQ','DHA'], ['golimar','lasbela'], ['new karachi','lasbela'],['liyari','buffer zone'] ,['cantt','sharahefaisal'],['nazimabad','garden'],['buffer zone','garden'],['jauhar','DHA'],['jauhar','cantt'],['golimar','liyari'],['shahrahefaisal','clifton'],['gulshan','new karachi'], ['buffer zone','FB area'], ['buffer zone','gulberg'], ['FB area','clifton'], ['jauhar','clifton'], ['gulberg','new karachi'], ['clifton','new karachi'], ['new karachi','DHA'], ['jauhar','gulberg'], ['clifton','DHA'], ['DHA','saddar'], ['saddar','garden'], ['garden','gulshan'], ['garden','new karachi'], ['golimar', 'new karachi'], ['saddar', 'korangi'], ['FB area', 'DHA'], ['north karachi', 'saddar'], ['gulshan', 'clifton'], ['saddar', 'liyaari'], ['clifton', 'korangi'], ['orangi town', 'garden'], ['clifton', 'nazimabad'], ['korangi', 'jauhar'], ['lyari', 'garden']]
+nodedata = {}
+
+for key in user_data:
+    nodedata[key] = {'coordinate': user_data[key]['contactdetail']['coordinate']}
+
+
+
+for user in user_data:
+    x1, y1 = user_data[user]['contactdetail']['coordinate']
+    draw_node(w, x1, y1, user_data[user]['contactdetail']['address'])
+    rider = w.create_oval(*riderdata['coordinate'], riderdata['coordinate'][0]+20, riderdata['coordinate'][1]+20,
+                           fill='blue', outline='blue', width=15)
+    for edge in edges_users:
+        if user_data[user]['contactdetail']['address'] in edge:
+            other_address = edge[0] if user_data[user]['contactdetail']['address'] == edge[1] else edge[1]
+            for other_user in user_data:
+                if user_data[other_user]['contactdetail']['address'] == other_address:
+                    x2, y2 = user_data[other_user]['contactdetail']['coordinate']
+                    draw_edge(w, x1, y1, x2, y2)
+                    distance = calculate_distance(x1, y1, x2, y2)
+                    w.create_text((x1+x2)/2, (y1+y2)/2, text=f"{distance:.1f}", fill="black")
+                    edgedist.append([user, other_user, distance])
+edgelist=edgedist
+
+
+
+def move_node(x, y):
+    w.coords(rider, x, y, x+20, y+20)
+
+data={}
+newdict={}
+
+
+for i in user_data:
+    data[i]=user_data[i]['contactdetail']['OrderPlaced'].split('-')
+
+
+def selection_sort_dict_dates(data):
+    sorted_data = {}
+    keys = list(data.keys())
+    for i in range(len(keys)):
+        min_key = i
+        for j in range(i+1, len(keys)):
+            if data[keys[j]] < data[keys[min_key]]:
+                min_key = j
+        keys[i], keys[min_key] = keys[min_key], keys[i]
+    for key in keys:
+        sorted_data[key] = data[key]
+    return sorted_data
+sorted_data=selection_sort_dict_dates(data)
+
+queue=[]
+for i in sorted_data:
+    queue.append(i)
+print(queue)
+
+# w.create_text(200,1200, text='the orders must be delivered in following sequeuce', fill="black", font="Arial 12 bold")
+w.create_text(1450,200, text='the orders must be delivered in following sequeuce', fill="black", font="Arial 12 bold")
+r=0
+for i in queue:
+    r+=60
+    x3=1300
+    y3=300
+    w.create_text(x3+r,y3, text=str(i), fill="black", font="Arial 12 bold")
+
+start=queue[0]
+end=queue[-1]
+
+G={}
+def createnodes(nodes,user_data):
+    for i in user_data:
+        nodes.append(i)
+    return nodes
+
+def addnodes(nodes,G):
+    for i in nodes:
+        G[i]={}
+    return G
+
+def createadjencymap(G,nodes,edgelist):
+    nodes=createnodes(nodes,user_data)
+    G=addnodes(nodes,G)
+    for i in nodes:
+        list1=[]
+        for k in edgelist:
+            if k[0]==i:
+                T=(k[1],k[2])
+                list1.append(T)
+            elif k[1]==i:
+                T=(k[0],k[2])
+                list1.append(T)
+        G[i]=list1
+    return G
+
+graph_dict = {}
+adjancymap=createadjencymap(G,nodes,edgelist)
+print(adjancymap)
+adj_dict = {}
+for node in adjancymap:
+    adj_dict[node] = {}
+    for adj_node, weight in adjancymap[node]:
+        adj_dict[node][adj_node] = weight
+        if adj_node not in adj_dict:
+            adj_dict[adj_node] = {}
+        adj_dict[adj_node][node] = weight
+
+print(adj_dict)
+
+
+def dijkstra(graph,start):
+    distances={node:float('inf') for node in graph}
+    distances[start]=0
+    pq=[(0,start)]
+    prev={start:None}
+    while pq:
+        currentdistance,currentnode=heapq.heappop(pq)
+        if currentdistance>distances[currentnode]:
+            continue
+        for neighbor,weight in graph[currentnode].items():
+            distance=currentdistance+weight
+            if distance<distances[neighbor]:
+                distances[neighbor]=distance
+                prev[neighbor]=currentnode
+                heapq.heappush(pq,(distance,neighbor))
+    return distances,prev
+def shortestpath(graph,start,end,queue,user_data):
+    x2=1500
+    y2=500
+    b=0
+    for i in range(len(queue)-1):
+        b+=50
+        start=queue[i]
+        end=queue[i+1]
+        distances,prev=dijkstra(graph,start)
+        path=[]
+        node=end
+        while node is not None:
+            path.append(node)
+            node=prev[node]
+        path.reverse()
+        print(path)
+        a=0
+        for i in path:
+            a+=50
+            x1=1400
+            y1=600
+            x, y = nodedata[i]['coordinate']
+            move_node(x,y)
+            w.update()
+            w.after(1000)
+            # w.create_text(x1,y1+a, text='currently at '+str(i), fill="black", font="Arial 12 bold")
+            
+        w.create_text(x2,y2+b, text= str(user_data[str(i)]['orderdetail']['item']) +' delivered to  '+str(i)+', price to collect'+str(user_data[str(i)]['orderdetail']['price']), fill="black", font="Arial 12 bold")
+        w.after(2000)
+#item add
+#price add
+#picture import
+
+
+shortestpath(adj_dict,start,end,queue,user_data)
+
+mainloop()
