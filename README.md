@@ -16,7 +16,7 @@ Steps to run the code:
 1. Creat a file in your enviroment (for e.g. VS code in my case). And save it in the same location you want your input data to be stored.
 2. Write the code provided.
 3. Run the code.
-4. There will be a window asking for details reagarding the order.
+4. There will be a window asking for details reagarding the orders.
 5. The following cells should have specified data entered in the cell. 
 6. 'Coordinate' cell as a tuple with two integer values (less than 1500). And 'address' cell should have location from the list of edges only. 
 7. Fill all the cells and click submit. And remember to take enter locations with their cordiantes as wriiten in the commented data.
