@@ -2,7 +2,7 @@
 This is a group project for our course 'Data Structures and Algorithm'. This code is capable of taking inputs from the user and provides a list according to the time the user placed the order, and in that specific order what will be the shortest path is also shown. Along with the path the item to be delivered is show and the price to be collected.
 
 *Disclaimer*
-This program takes the assumption, for e.g. there are limited number of places in city Karachi, and every places has its own coordinates. Input is not validated, hence the program might not work if the data might not sync with the program.
+This program takes the assumption, for e.g. there are less than 50 number of places in city Karachi, and every places has its own coordinates (a similar way how our 'Google Maps' work). Input is not validated, hence the program might not work if the data might not sync with the program (for e.g. if there is an integer as an input instead of a string or vice versa).
 
 The code will run on computers with python idle installed either as a separate software, for e.g. 'IDLE', or as an extension on a parent software, for e.g. 'Visual Studio Code'.
 
